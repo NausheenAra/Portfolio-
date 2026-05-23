@@ -1,27 +1,44 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-  window.navigateToSection = function(id) {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  window.navigateToSection = function (id) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  window.openModal = function(id) {
-    document.getElementById(id).classList.add('open');
-    document.body.style.overflow = 'hidden';
+  window.openModal = function (id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
   };
 
-  window.closeModal = function(id) {
-    document.getElementById(id).classList.remove('open');
-    document.body.style.overflow = '';
+  window.closeModal = function (id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
   };
 
-  window.mobileNav = function(id) {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
+  window.mobileNav = function (id) {
+    if (hamburger) hamburger.classList.remove('open');
+    if (mobileMenu) mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+  }
 
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -48,16 +65,5 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.design-modal.open').forEach(m => closeModal(m.id));
     }
   });
-
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
-  }
 
 });
